@@ -144,9 +144,9 @@ if page == "🏠 Home":
         """, unsafe_allow_html=True)
     with col2:
         st.image(
-            "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=400&q=80",
-            use_container_width=True
-        )
+    "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=400&q=80",
+    width=400  # or any preferred width
+)
     st.info("Go to **Prediction** tab to start.")
 
 # ============ ABOUT PAGE ============
