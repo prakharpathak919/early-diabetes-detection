@@ -106,8 +106,7 @@ st.markdown("""
 st.sidebar.image(
     "https://drive.google.com/file/d/1RpShmeRdtHxoMW3m3pqwyQv6XCqiZ46X/view?usp=sharing",
     width=100,
-    caption="Early Diabetes Predictor",
-    use_container_width=True
+    caption="Early Diabetes Predictor"
 )
 
 page = st.sidebar.radio(
