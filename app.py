@@ -103,7 +103,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ============ SIDEBAR NAV =============
-st.sidebar.image("https://github.com/prakharpathak919/early-diabetes-detection/blob/main/logo.png", width=100, caption="Early Diabetes Predictor", use_container_width=True)
+st.sidebar.image(
+    "https://raw.githubusercontent.com/prakharpathak919/early-diabetes-detection/main/logo.png",
+    width=100,
+    caption="Early Diabetes Predictor",
+    use_container_width=True
+)
+
 page = st.sidebar.radio(
     "Navigate",
     ["🏠 Home", "💉 Prediction", "💡 About", "🌐 Resources", "🧑‍🤝‍🧑 Contributors"]
