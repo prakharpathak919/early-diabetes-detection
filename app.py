@@ -104,7 +104,7 @@ st.markdown("""
 
 # ============ SIDEBAR NAV =============
 st.sidebar.image(
-    "https://raw.githubusercontent.com/prakharpathak919/early-diabetes-detection/main/logo.png",
+    "https://drive.google.com/file/d/1RpShmeRdtHxoMW3m3pqwyQv6XCqiZ46X/view?usp=sharing",
     width=100,
     caption="Early Diabetes Predictor",
     use_container_width=True
