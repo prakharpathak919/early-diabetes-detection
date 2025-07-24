@@ -104,7 +104,7 @@ st.markdown("""
 
 # ============ SIDEBAR NAV =============
 st.sidebar.image(
-    "https://drive.google.com/file/d/1RpShmeRdtHxoMW3m3pqwyQv6XCqiZ46X/view?usp=sharing",
+    "https://github.com/prakharpathak919/early-diabetes-detection/blob/main/logo.png",
     width=100,
     caption="Early Diabetes Predictor"
 )
@@ -200,7 +200,7 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "RishiRaj Singh Parmar",
             "role": "ML Engineer",
-            "linkedin": "https://www.linkedin.com/in/rohanpatel/"
+            "linkedin": "https://www.linkedin.com"
         },
         {
             "name": "Anuj Anand",
@@ -210,12 +210,12 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "Divyansh Garg",
             "role": "Data Analyst",
-            "linkedin": "https://www.linkedin.com/in/karansingh/"
+            "linkedin": "https://www.linkedin.com"
         },
         {
             "name": "Ajit Singh",
             "role": "Deployment/QA",
-            "linkedin": "https://www.linkedin.com/in/mayajoshi/"
+            "linkedin": "https://www.linkedin.com"
         }
     ]
 
@@ -223,12 +223,12 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "Dr. Khursheed Ahmad Bhat",
             "role": "Research Mentor",
-            "linkedin": "https://www.linkedin.com/in/skgupta/"
+            "linkedin": "https://www.linkedin.com/in"
         },
         {
             "name": "Ms. Pooja",
             "role": "Clinical Advisor",
-            "linkedin": "https://www.linkedin.com/in/meenakshiroy/"
+            "linkedin": "https://www.linkedin.com"
         }
     ]
 
