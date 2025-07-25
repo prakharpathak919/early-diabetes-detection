@@ -5,9 +5,106 @@ import joblib
 import time
 import plotly.graph_objects as go
 from io import StringIO
+from streamlit_option_menu import option_menu
 
 # ============ PAGE CONFIG ==========
 st.set_page_config(page_title="Early Diabetes Predictor", page_icon="🩺", layout="wide")
+
+# ============ THEME SLIDER ===========
+# Theme toggle (add to top of sidebar, above navigation)
+selected_theme = option_menu(
+    menu_title=None,
+    options=["Day", "Night"],
+    icons=["sun", "moon"],
+    menu_icon="cast",
+    default_index=0 if st.session_state.get('theme_mode', 'Day') == 'Day' else 1,
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "rgba(0,0,0,0)"},
+        "icon": {"color": "#fdc43a", "font-size": "24px"},
+        "nav-link": {
+            "font-size": "18px",
+            "margin": "0 8px",
+            "color": "#38404a",
+            "border-radius": "8px",
+            "background-color": "#f0f2f6",
+            "padding": "6px 20px"
+        },
+        "nav-link-selected": {
+            "background-color": "#00337C",
+            "color": "#fff",
+            "font-weight": "bold",
+            "box-shadow": "0 2px 12px rgba(0,51,124,0.15)"
+        }
+    }
+)
+
+st.session_state.theme_mode = selected_theme
+# ============ THEME CSS ============
+day_css = """
+<style>
+body { background: linear-gradient(110deg, #e8f0fe 0%, #fceabb 100%) !important; }
+.main {
+    background: linear-gradient(135deg, #e0f7fa 10%, #ffffff 100%) !important;
+}
+.glass {
+    background: rgba(255,255,255,0.38) !important;
+    box-shadow: 0 6px 32px rgba(60,60,160,.16) !important;
+    border: 1.5px solid #e8eaf6 !important;
+    border-radius: 18px !important;
+    padding: 32px 38px !important;
+    margin: 14px 0 !important;
+}
+.header { font-size:48px; font-weight:bold; text-align:center; color:#082032; margin-bottom:0; }
+.subheader { color:#34495e; font-size:20px; text-align:center; margin-bottom:18px; }
+.result-box { padding:20px 10px; border-radius:16px; text-align:center; font-size:25px; font-weight:600; margin-top:20px; box-shadow:0 0 15px rgba(0,0,0,0.07);}
+.high-risk { background:rgba(255, 102, 102, 0.17); color:#d63031; border:2.2px solid #d63031;}
+.low-risk { background:rgba(46,204,113,0.14); color:#008800; border:2.2px solid #38c172;}
+.prob-bar { height:30px; background:#eaf6fb; border-radius:12px; margin:10px 0 4px 0;}
+.prob-inner { height:30px; background:linear-gradient(90deg,#00bcd4,#2196f3); border-radius:12px; text-align:right; color:#fff; padding:5px 18px 0 0; font-weight:600; font-size:18px;}
+.stButton > button {
+    background: linear-gradient(90deg, #10c6ff 0%, #004aad 100%) !important;
+    color: white !important; border:none; border-radius:12px; font-size:20px; font-weight:700; padding:16px 38px; margin:8px auto; display:block;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08); transition:transform 0.17s, box-shadow 0.17s; outline:none;}
+.stButton > button:hover {
+    background: linear-gradient(90deg, #2196f3 0%, #006aff 100%) !important;
+    transform:scale(1.07); box-shadow:0 6px 18px rgba(50,100,220,0.18);}
+</style>
+"""
+
+night_css = """
+<style>
+body { background: linear-gradient(120deg, #22242c 0%, #444 100%) !important; }
+.main {
+    background: linear-gradient(135deg, #232946 70%, #121212 100%) !important;
+}
+.glass {
+    background: rgba(50,50,70,0.50) !important;
+    box-shadow: 0 6px 42px rgba(30,40,80,0.16) !important;
+    border: 1.5px solid #313552 !important;
+    border-radius: 18px !important;
+    padding: 32px 38px !important;
+    margin: 14px 0 !important;
+}
+.header { font-size:48px; font-weight:bold; text-align:center; color:#f3f6fc; margin-bottom:0; }
+.subheader { color:#c3cadd; font-size:20px; text-align:center; margin-bottom:18px; }
+.result-box { padding:20px 10px; border-radius:16px; text-align:center; font-size:25px; font-weight:600; margin-top:20px; box-shadow:0 0 30px rgba(20,30,80,0.18);}
+.high-risk { background:rgba(255,60,60,0.13); color:#ff6868; border:2.2px solid #ff6868;}
+.low-risk { background:rgba(46, 204, 113, 0.14); color:#36fd8c; border:2.2px solid #36fd8c;}
+.prob-bar { height:30px; background:#31355b; border-radius:12px; margin:10px 0 4px 0;}
+.prob-inner { height:30px; background:linear-gradient(90deg,#2193b0,#6dd5ed); border-radius:12px; text-align:right; color:#fff; padding:5px 18px 0 0; font-weight:600; font-size:18px;}
+.stButton > button {
+    background: linear-gradient(90deg, #355c7d 0%, #6c5b7b 100%) !important;
+    color: #fafafa !important; border:none; border-radius:12px; font-size:20px; font-weight:700; padding:16px 38px; margin:8px auto; display:block;
+    box-shadow:0 2px 10px rgba(0,0,0,0.21); transition:transform 0.17s, box-shadow 0.17s; outline:none;}
+.stButton > button:hover {
+    background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%) !important;
+    color:#212121 !important; transform:scale(1.07); box-shadow:0 6px 21px rgba(80,170,240,0.14);}
+table, th, td {color:#f3f6fc !important;}
+</style>
+"""
+
+st.markdown(day_css if st.session_state.theme_mode == 'Day' else night_css, unsafe_allow_html=True)
 
 # ============ LOAD MODEL ============
 try:
@@ -16,96 +113,8 @@ except FileNotFoundError:
     st.error("🚫 Model file not found. Please make sure 'models/diabetes_model.pkl' exists.")
     st.stop()
 
-# ============ PRO-LEVEL CSS ============
-st.markdown("""
-    <style>
-    body { background: linear-gradient(110deg, #e8f0fe 0%, #fceabb 100%); }
-    .main {
-        background: linear-gradient(135deg, #e0f7fa, #ffffff);
-        background-attachment: fixed;
-    }
-    .glass {
-        background: rgba(255,255,255,0.38);
-        box-shadow: 0 6px 32px rgba(60,60,160,.16);
-        border: 1.5px solid #e8eaf6;
-        border-radius: 18px;
-        padding: 32px 38px;
-        margin: 14px 0;
-    }
-    .header {
-        font-size: 48px;
-        font-weight: bold;
-        text-align: center;
-        color: #082032;
-        margin-bottom: 0px;
-    }
-    .subheader {
-        color: #34495e;
-        font-size: 20px;
-        text-align: center;
-        margin-bottom: 18px;
-    }
-    .result-box {
-        padding: 20px 10px;
-        border-radius: 16px;
-        text-align: center;
-        font-size: 25px;
-        font-weight: 600;
-        margin-top: 20px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.07);
-    }
-    .high-risk {
-        background: rgba(255, 102, 102, 0.17);
-        color: #d63031;
-        border: 2.2px solid #d63031;
-    }
-    .low-risk {
-        background: rgba(46, 204, 113, 0.14);
-        color: #008800;
-        border: 2.2px solid #38c172;
-    }
-    .prob-bar {
-        height: 30px;
-        background: #eaf6fb;
-        border-radius: 12px;
-        margin: 10px 0 4px 0;
-    }
-    .prob-inner {
-        height: 30px;
-        background: linear-gradient(90deg, #00bcd4, #2196f3);
-        border-radius: 12px;
-        text-align: right;
-        color: #fff;
-        padding: 5px 18px 0 0;
-        font-weight: 600;
-        font-size: 18px;
-    }
-    .stButton > button {
-        background: linear-gradient(90deg, #10c6ff 0%, #004aad 100%);
-        color: white !important;
-        border: none;
-        border-radius: 12px;
-        font-size: 20px;
-        font-weight: 700;
-        padding: 16px 38px;
-        margin: 8px auto;
-        display: block;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        transition: transform 0.17s, box-shadow 0.17s;
-        outline: none;
-    }
-    .stButton > button:hover {
-        background: linear-gradient(90deg, #2196f3 0%, #006aff 100%);
-        transform: scale(1.07);
-        box-shadow: 0 6px 18px rgba(50,100,220,0.18);
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # ============ SIDEBAR NAV =============
-
-st.image("https://raw.githubusercontent.com/prakharpathak919/early-diabetes-detection/main/logo.png", width=100, caption="Early Diabetes Predictor")
-
+st.sidebar.image("logo.png", width=100, caption="Early Diabetes Predictor", use_container_width=True)
 page = st.sidebar.radio(
     "Navigate",
     ["🏠 Home", "💉 Prediction", "💡 About", "🌐 Resources", "🧑‍🤝‍🧑 Contributors"]
@@ -144,9 +153,9 @@ if page == "🏠 Home":
         """, unsafe_allow_html=True)
     with col2:
         st.image(
-    "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=400&q=80",
-    width=400  # or any preferred width
-)
+            "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=400&q=80",
+            use_container_width=True
+        )
     st.info("Go to **Prediction** tab to start.")
 
 # ============ ABOUT PAGE ============
@@ -197,7 +206,7 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "RishiRaj Singh Parmar",
             "role": "ML Engineer",
-            "linkedin": "https://www.linkedin.com"
+            "linkedin": "https://www.linkedin.com/in/rohanpatel/"
         },
         {
             "name": "Anuj Anand",
@@ -207,25 +216,24 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "Divyansh Garg",
             "role": "Data Analyst",
-            "linkedin": "https://www.linkedin.com"
+            "linkedin": "https://www.linkedin.com/in/karansingh/"
         },
         {
             "name": "Ajit Singh",
             "role": "Deployment/QA",
-            "linkedin": "https://www.linkedin.com"
+            "linkedin": "https://www.linkedin.com/in/mayajoshi/"
         }
     ]
-
     mentors = [
         {
             "name": "Dr. Khursheed Ahmad Bhat",
             "role": "Research Mentor",
-            "linkedin": "https://www.linkedin.com/in"
+            "linkedin": "https://www.linkedin.com/in/skgupta/"
         },
         {
             "name": "Ms. Pooja",
             "role": "Clinical Advisor",
-            "linkedin": "https://www.linkedin.com"
+            "linkedin": "https://www.linkedin.com/in/meenakshiroy/"
         }
     ]
 
@@ -234,25 +242,21 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         <h3 style="text-align:center; margin-bottom:4px;">🤝 Contributors</h3>
         <ul style="font-size:17px; margin-bottom:12px;">
     """, unsafe_allow_html=True)
-
     for member in contributors:
         st.markdown(
             f'<li><a href="{member["linkedin"]}" target="_blank">{member["name"]}</a> – <i>{member["role"]}</i></li>',
             unsafe_allow_html=True
         )
-
     st.markdown("""
         </ul>
         <h4 style="margin-bottom:3px;">🧑‍🏫 Mentors</h4>
         <ul style="font-size:16px;">
     """, unsafe_allow_html=True)
-
     for mentor in mentors:
         st.markdown(
             f'<li><a href="{mentor["linkedin"]}" target="_blank">{mentor["name"]}</a> – <i>{mentor["role"]}</i></li>',
             unsafe_allow_html=True
         )
-
     st.markdown("</ul></div>", unsafe_allow_html=True)
 
 # ============ PREDICTION PAGE ============
