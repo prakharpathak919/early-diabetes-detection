@@ -114,7 +114,9 @@ except FileNotFoundError:
     st.stop()
 
 # ============ SIDEBAR NAV =============
-st.sidebar.image("logo.png", width=100, caption="Early Diabetes Predictor", use_container_width=True)
+#st.sidebar.image("logo.png", width=100, caption="Early Diabetes Predictor", use_container_width=True)
+st.sidebar.image("logo.png", width=100, caption="Early Diabetes Prediction")
+
 page = st.sidebar.radio(
     "Navigate",
     ["🏠 Home", "💉 Prediction", "💡 About", "🌐 Resources", "🧑‍🤝‍🧑 Contributors"]
