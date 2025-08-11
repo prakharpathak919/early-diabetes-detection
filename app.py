@@ -156,7 +156,8 @@ if page == "🏠 Home":
     with col2:
         st.image(
             "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=400&q=80",
-            use_container_width=True
+            caption="Example", width=400
+            #use_container_width=True
         )
     st.info("Go to **Prediction** tab to start.")
 
