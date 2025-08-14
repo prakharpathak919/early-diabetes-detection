@@ -204,12 +204,12 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "Prakhar Pathak",
             "role": "Lead Developer",
-            "linkedin": "www.linkedin.com/in/prakhar-pathak-83a554256"
+            "linkedin": "https://www.linkedin.com/in/prakhar-pathak-83a554256/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
         },
         {
             "name": "RishiRaj Singh Parmar",
             "role": "ML Engineer",
-            "linkedin": "https://www.linkedin.com/in/rohanpatel/"
+            "linkedin": "https://www.linkedin.com"
         },
         {
             "name": "Anuj Anand",
@@ -219,24 +219,24 @@ elif page == "🧑‍🤝‍🧑 Contributors":
         {
             "name": "Divyansh Garg",
             "role": "Data Analyst",
-            "linkedin": "https://www.linkedin.com/in/karansingh/"
+            "linkedin": "https://www.linkedin.com"
         },
         {
             "name": "Ajit Singh",
             "role": "Deployment/QA",
-            "linkedin": "https://www.linkedin.com/in/mayajoshi/"
+            "linkedin": "https://www.linkedin.com"
         }
     ]
     mentors = [
         {
             "name": "Dr. Khursheed Ahmad Bhat",
             "role": "Research Mentor",
-            "linkedin": "https://www.linkedin.com/in/skgupta/"
+            "linkedin": "https://www.linkedin.com"
         },
         {
             "name": "Ms. Pooja",
             "role": "Clinical Advisor",
-            "linkedin": "https://www.linkedin.com/in/meenakshiroy/"
+            "linkedin": "https://www.linkedin.com"
         }
     ]
 
